@@ -7,17 +7,19 @@ import gsap from 'gsap'
 
 const glftLoader = new GLTFLoader()
 
+
 // Debug
 const gui = new dat.GUI()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
-// Scene and Timeline
+// Scene
 const scene = new THREE.Scene()
+
 let tl = gsap.timeline()
 
-// Our Object
+// Our Phone
 glftLoader.load('honey-logo.gltf', (gltf) => {
     gltf.scene.scale.set( 0.3 , 0.3 , 0.3 )
     gltf.scene.rotation.set( 6.2 , 0.3 , 0 )
@@ -32,7 +34,11 @@ glftLoader.load('honey-logo.gltf', (gltf) => {
         tl.to(gltf.scene.rotation, { y: 0.1, duration: 2})
         tl.to(gltf.scene.rotation, { y: -0.1, duration: 8})
         tl.to(gltf.scene.rotation, { y: 0.1, duration: 8})
+
+
+
 })
+
 
 // Lights
 
@@ -72,7 +78,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 0
 camera.position.y = 0
-camera.position.z = 2
+camera.position.z = 1
 scene.add(camera)
 
 // Controls
