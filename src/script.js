@@ -2,6 +2,10 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import gsap from 'gsap'
+
+const glftLoader = new GLTFLoader()
 
 // Debug
 const gui = new dat.GUI()
@@ -9,26 +13,32 @@ const gui = new dat.GUI()
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
-// Scene
+// Scene and Timeline
 const scene = new THREE.Scene()
+let tl = gsap.timeline()
 
-// Objects
-const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
+// Our Object
+glftLoader.load('honey-logo.gltf', (gltf) => {
+    gltf.scene.scale.set( 0.3 , 0.3 , 0.3 )
+    gltf.scene.rotation.set( 6.2 , 0.3 , 0 )
+    scene.add(gltf.scene)
+    gui.add(gltf.scene.rotation, 'x').min(-1).max(1)
+    gui.add(gltf.scene.rotation, 'y').min(-1).max(1)
+    gui.add(gltf.scene.rotation, 'z').min(-0.2).max(0.2)
 
-// Materials
-
-const material = new THREE.MeshBasicMaterial()
-material.color = new THREE.Color(0xff0000)
-
-// Mesh
-const sphere = new THREE.Mesh(geometry,material)
-scene.add(sphere)
+    tl.to(gltf.scene.rotation, { y: -0.65, duration: 2})
+    tl.to(gltf.scene.scale, { x: 0.2, y: 0.2, duration: 1}, "-=1")
+    tl.to(gltf.scene.position, { x: 0.5})
+        tl.to(gltf.scene.rotation, { y: 0.1, duration: 2})
+        tl.to(gltf.scene.rotation, { y: -0.1, duration: 8})
+        tl.to(gltf.scene.rotation, { y: 0.1, duration: 8})
+})
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff, 0.1)
+const pointLight = new THREE.AmbientLight(0xffffff, 1.5)
 pointLight.position.x = 2
-pointLight.position.y = 3
+pointLight.position.y = -3
 pointLight.position.z = 4
 scene.add(pointLight)
 
@@ -73,7 +83,8 @@ scene.add(camera)
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    alpha: true
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -81,7 +92,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
-
+ const control = new OrbitControls(camera, renderer.domElement);
 const clock = new THREE.Clock()
 
 const tick = () =>
@@ -90,7 +101,7 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
 
     // Update objects
-    sphere.rotation.y = .5 * elapsedTime
+    // sphere.rotation.y = .5 * elapsedTime
 
     // Update Orbital Controls
     // controls.update()
