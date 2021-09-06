@@ -20,7 +20,7 @@ const scene = new THREE.Scene()
 let tl = gsap.timeline()
 
 // Our Phone
-glftLoader.load('3dphone.gltf', (gltf) => {
+glftLoader.load('honey-logo.gltf', (gltf) => {
     gltf.scene.scale.set( 0.3 , 0.3 , 0.3 )
     gltf.scene.rotation.set( 6.2 , 0.3 , 0 )
     scene.add(gltf.scene)
