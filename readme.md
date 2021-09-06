@@ -1,5 +1,6 @@
 # Three.js Starter
 Courtesy of Bruno Simon of https://threejs-journey.xyz/
+Also a shout out to Gary Simon at https://github.com/designcourse
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
