@@ -30,7 +30,7 @@ glftLoader.load('honey-logo.gltf', (gltf) => {
 
     tl.to(gltf.scene.rotation, { y: -0.65, duration: 2})
     tl.to(gltf.scene.scale, { x: 0.2, y: 0.2, duration: 1}, "-=1")
-    tl.to(gltf.scene.position, { x: 0.5})
+    // tl.to(gltf.scene.position, { x: 0.5})
         tl.to(gltf.scene.rotation, { y: 0.1, duration: 2})
         tl.to(gltf.scene.rotation, { y: -0.1, duration: 8})
         tl.to(gltf.scene.rotation, { y: 0.1, duration: 8})
@@ -38,7 +38,6 @@ glftLoader.load('honey-logo.gltf', (gltf) => {
 
 
 })
-
 
 // Lights
 
